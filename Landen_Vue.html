@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        body
+        {
+            font-family: arial;
+            background-color: azure;
+            text-align: center;
+        }
+
+        table
+        {
+            width: 60%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        tr:first-child
+        {
+            background-color: blue;
+            color: wheat;
+        }
+
+        th,td
+        {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid black;
+            
+        }
+
+        .population, .oppervlakte
+        {
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        th.population, th.oppervlakte, th.naam
+        {
+            cursor: pointer;
+        }
+
+    </style>
+
+    <script>
+        function init()
+        {
+            var vm = Vue.createApp({
+                data() {
+                    return {
+                        landen: [],
+                        sortAscending: true,
+                        searchText: ""
+                    }
+                },
+
+                // TypeScript = Javascript + types voor variabelen
+
+                computed: {
+                    filteredLanden() {
+                        return this.landen.filter(land => land.name.common.toLowerCase().includes(this.searchText.toLowerCase()));
+                    }
+                },
+
+                mounted() {
+                    $.getJSON("https://restcountries.com/v3.1/all", data => this.landen = data);
+                },
+
+                methods: {
+                    sortByPopulation() {
+                        this.landen.sort((a, b) => b.population - a.population);
+                    },
+                    sortByArea() {
+                        this.landen.sort((a, b) => b.area - a.area);
+                    },
+                    sortByName() {
+                        this.landen.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    }
+                }
+            });
+
+            vm.mount("#root");
+        }
+    </script>
+
+</head>
+<body onload="init();">
+
+    <div id="root">
+
+        <h1 v-if="filteredLanden.length == 1">Dit is {{ filteredLanden.length }} van in totaal {{ landen.length }} landen</h1>
+        
+        <h1 v-else>Dit zijn {{ filteredLanden.length }} van in totaal {{ landen.length }} landen</h1>
+
+        <input type="text" v-model="searchText" />
+
+        <br />
+        <br />
+
+        <table>
+            <tr>
+                <th class="naam" @click="sortByName();">Naam</th>
+                <th>Regio</th>
+                <th>Subregio</th>
+                <th class="population" @click="sortByPopulation();">Population</th>
+                <th class="oppervlakte" @click="sortByArea();">Oppervlakte</th>
+                <th>Vlag</th>
+            </tr>
+            <tr v-for="land in filteredLanden">
+                <td>{{ land.name.common }}</td>
+                <td>{{ land.region }}</td>
+                <td>{{ land.subregion }}</td>
+                <td class="population">{{ land.population }}</td>
+                <td class="oppervlakte">{{ land.area }}</td>
+                <td>
+                    <img :src="land.flags.svg" width="100" />
+                </td>
+            </tr>   
+        </table>
+
+    </div>
+
+</body>
+</html>

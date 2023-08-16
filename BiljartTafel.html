@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        canvas {
+            background-color: green;
+            border-style: outset;
+            border-width: 8px;
+            border-color: brown;
+            border-radius: 10px;
+
+            /* width: 800px;
+            height: 800px; */
+        }
+    </style>
+
+    <script>
+
+        // Een voorbeeld van het tekenen van een grafiek:        
+        // https://xanderwemmers.nl/canvasbitcoin.html
+
+        var bal1 = {
+            kleur: "white",
+            x: 200,
+            y: 50,
+            speedX: 1,
+            speedY: 1
+        };
+
+        var bal2 = {
+            kleur: "yellow",
+            x: 50,
+            y: 100,
+            speedX: 0.8,
+            speedY: -1.2
+        };
+
+        var bal3 = {
+            kleur: "red",
+            x: 20,
+            y: 120,
+            speedX: -0.5,
+            speedY: 1.5
+        };
+
+        // var bal4 = {
+        //     kleur: "blue",
+        //     x: 150,
+        //     y: 20,
+        //     speedX: 0.5,
+        //     speedY: 1.5
+        // };
+
+        const radius = 10;
+
+        var ballen = [bal1, bal2, bal3];
+
+        var paused = false;
+
+        function drawTable()
+        {
+            if (paused)
+                return;
+
+            var canvas = document.getElementById("mijnCanvas");
+            var ctx = canvas.getContext("2d");
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            //ctx.rect(10, 10, 60, 30);
+
+            for (var b of ballen)
+            {
+                ctx.beginPath();
+
+                ctx.arc(b.x, b.y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = b.kleur;
+                ctx.fill();
+
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+
+                b.x += b.speedX;
+                b.y += b.speedY;
+
+                b.speedX *= 0.999;
+                b.speedY *= 0.999;
+
+                // Kaatsen tegen de linkerkant
+                if (b.x < radius)
+                    b.speedX *= -1;
+
+                // De bovenkant
+                if (b.y < radius)
+                    b.speedY *= -1;
+
+                // De rechterkant
+                if (b.x > canvas.width - radius)
+                    b.speedX *= -1;
+
+                // Onderkant
+                if (b.y > canvas.height - radius)
+                    b.speedY *= -1;
+            }
+        }
+
+        function kick()
+        {
+            for (var b of ballen)
+            {
+                // Een getal tussen -2 en 2
+                b.speedX = Math.random() * 4 - 2;
+                b.speedY = Math.random() * 4 - 2;
+            }
+
+        }
+
+        function startstop()
+        {
+            paused = !paused;
+
+            var knoppen = document.getElementsByTagName("button");
+
+            for (var k of knoppen)
+            {
+                if (k.id != "startstopKnop")
+                    k.disabled = paused;
+            }
+        }
+
+        function newBall()
+        {
+            var canvas = document.getElementById("mijnCanvas");
+
+            var b = {
+                kleur: '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                speedX: Math.random() * 4 - 2,
+                speedY: Math.random() * 4 - 2
+            };
+
+            ballen.push(b);
+        }
+
+        
+        function removeBall()
+        {
+            // shift verwijdert het eerste element van de lijst
+            // ballen.shift();
+
+            // pop verwijdert de laatste
+            if (ballen.length > 3)
+                ballen.pop();
+
+            // Of gooi alles weg door een nieuwe lege lijst te maken:
+            // ballen = [];
+        }
+
+        function saveGame()
+        {
+            localStorage.gameData = JSON.stringify(ballen);
+        }
+
+        function loadGame()
+        {
+            ballen = JSON.parse(localStorage.gameData);
+        }
+
+    </script>
+
+</head>
+
+<body onload="setInterval(drawTable, 10);">
+
+    <h1>Biljarttafel</h1>
+
+    <canvas width="500" height="300" id="mijnCanvas"></canvas>
+
+    <br />
+    <br />
+
+    <button onclick="kick();">Kick off!</button>
+
+    <button id="startstopKnop" onclick="startstop();">Start / Stop</button>
+
+    <button onclick="newBall();">New ball</button>
+
+    <button onclick="removeBall()">Remove bal</button>
+
+    <button onclick="saveGame()">Save Game</button>
+    
+    <button onclick="loadGame()">Load Game</button>
+
+</body>
+
+</html>

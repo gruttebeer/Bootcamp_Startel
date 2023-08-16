@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
+
+    <style>
+        body
+        {
+            font-family: arial;
+        }
+
+        #links, #rechts
+        {
+            width: 50%;
+            float: left;
+        }
+
+        /* #links
+        {
+            margin: 1px;
+        } */
+
+        h1
+        {
+            text-align: center;
+        }
+
+        h3
+        {
+            background-color: bisque;
+            width: 90%;
+            padding: 10px;
+        }
+
+        .description
+        {
+            width: 70%;            
+            float: left;
+        }
+        
+        .price
+        {
+            float: left;
+            width: 30%;
+        }
+        
+        .extra
+        {
+            font-style: italic;
+            font-size: 80%;
+            margin-bottom: 20px;
+        }
+
+        @media(max-width: 800px)
+        {
+            /* Als het scherm niet zo groot is, dan alles in 1 kolom tonen */
+            #links,#rechts
+            {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+    <script>
+        // Dit is mijn script
+
+        $.getJSON("https://xanderwemmers.nl/api/restaurant/starters", showStarters);
+        $.getJSON("https://xanderwemmers.nl/api/restaurant/drinks", showDrinks);
+        $.getJSON("https://xanderwemmers.nl/api/restaurant/mains", showMains);
+        $.getJSON("https://xanderwemmers.nl/api/restaurant/desserts", showDesserts);
+
+        function showStarters(data)
+        {
+            showDishes(data, "outputStarters");
+        }
+
+        function showDrinks(data)
+        {
+            showDishes(data, "outputDrinks");
+        }
+
+        function showMains(data)
+        {
+            showDishes(data, "outputMains");
+        }
+
+        function showDesserts(data)
+        {
+            showDishes(data, "outputDesserts");
+        }
+
+        function showDishes(data, id)
+        {
+            for(var teller=0; teller < data.length; teller++)
+            {
+                var div = document.createElement("div");
+                div.innerHTML = data[teller].Description;
+                div.className = "description";
+
+                document.getElementById(id).append(div);
+
+                div = document.createElement("div");
+                div.innerHTML = "&euro; " + data[teller].Price.toFixed(2);
+                div.className = "price";
+
+                document.getElementById(id).append(div);
+
+                div = document.createElement("div");
+                div.innerHTML = data[teller].Extra;
+                div.className = "extra";
+
+                document.getElementById(id).append(div);
+            }
+        }
+
+    </script>
+            
+</head>
+<body>
+    
+    <h1>Restaurant de Gouden Leeuw</h1>
+
+    <hr />
+
+    <div id="links">
+        <h3>Voorgerechten</h3>
+
+        <div id="outputStarters"></div>
+    
+        <h3>Hoofdgerechten</h3>
+    
+        <div id="outputMains"></div>
+    </div>
+
+    <div id="rechts">
+        <h3>Desserts</h3>
+
+        <div id="outputDesserts"></div>
+    
+        <h3>Dranken</h3>
+    
+        <div id="outputDrinks"></div>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <style>
+        /* body
+        {
+            background-color: hsl(120, 50%, 50%);
+        } */
+
+        input:invalid {
+            background-color: pink;
+        }
+    </style>
+
+    <script>
+
+        function init()
+        {
+            $("#geboortedatum").datepicker({
+                dateFormat: "dd-mm-yy",
+                yearRange: "1900:2023",
+                changeYear: true
+            });
+        }
+
+        function saveData()
+        {
+            if ($("input:invalid").length > 0)
+            {
+                alert("Het formulier is ongeldig!");
+                return;
+            }
+
+            var gegevens = {
+                voornaam: $("#voornaam").val(),
+                achternaam: $("#achternaam").val(),
+                geboortedatum: $("#geboortedatum").val(),
+                postcode: $("#postcode").val(),
+                land: $("#land").val()
+            };
+
+            // Gebruik het JSON formaat om alles op te slaan:
+            localStorage.mijnData = JSON.stringify(gegevens);
+        }
+
+        function loadData()
+        {
+            var gegevens = JSON.parse(localStorage.mijnData);
+
+            // Pure JS
+            // document.getElementById("voornaam").value = gegevens.voornaam;
+
+            // Met jQuery kan het korter:
+            $("#voornaam").val(gegevens.voornaam);
+            $("#achternaam").val(gegevens.achternaam);
+            $("#geboortedatum").val(gegevens.geboortedatum);
+            $("#land").val(gegevens.land);
+            $("#postcode").val(gegevens.postcode);
+        }
+
+        function clearData()
+        {
+            // Met jQuery kan dit in 1 regel!
+            $("input").val("");
+
+            // Zet de select weer terug op de eerste value met index = 0
+            $("select").prop("selectedIndex", 0);
+        }
+
+    </script>
+
+</head>
+
+<body onload="init();">
+
+    <h1>Mijn gegevens</h1>
+
+    <form action="mailto:info@xanderwemmers.nl?subject=Aanmelding" method="post">
+
+        <div>Voornaam</div>
+        <input name="firstname" type="text" id="voornaam" required />
+
+        <div>Achternaam</div>
+        <input name="lastname" type="text" id="achternaam" />
+
+        <div>Geboortedatum</div>
+        <input type="text" id="geboortedatum" />
+
+        <div>Land</div>
+        <select id="land">
+            <option>Kies een land...</option>
+            <option>Nederland</option>
+            <option>Belgie</option>
+            <option>Duitsland</option>
+            <option>Engeland</option>
+            <option>Frankrijk</option>
+        </select>
+
+        <div>Opmerkingen</div>
+        <textarea id="opmerkingen" maxlength="100" placeholder="Vertel het ons!" cols="50" rows="10"></textarea>
+
+        <div>Postcode</div>
+        <input id="postcode" type="text" pattern="[0-9]{4}[A-Z]{2}" placeholder="1234AB" />
+
+        <br />
+        <br />
+
+        <div>Haarkleur</div>
+        <input type="color" />
+
+        <br />
+        <br />
+
+        <button type="button" onclick="saveData();">Opslaan</button>
+        <button type="button" onclick="loadData();">Laden</button>
+        <button type="button" onclick="clearData();">Wissen</button>
+
+        <button type="submit">Verzend formulier</button>
+
+    </form>
+
+</body>
+
+</html>

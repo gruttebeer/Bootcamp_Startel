@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        function init()
+        {
+            var vm = Vue.createApp({
+                data() {
+                    return {
+                        titel: "HTML, CSS en JavaScript",
+                        trainer: "Xander Wemmers",
+                        deelnemers: [],
+                        nieuweNaam: ""
+                    }
+                },
+
+                methods: {
+                    addName() {
+                        this.deelnemers.push(this.nieuweNaam);
+                        this.nieuweNaam = "";
+                    }
+                }
+            });
+
+            vm.mount('#root');
+        }
+    </script>
+</head>
+<body onload="init();">
+
+    <div id="root">
+        <h1>{{ titel }}</h1>
+
+        <h3>{{ trainer }}</h3>
+
+        <input @keyup.enter="addName()" type="text" v-model="nieuweNaam" />
+        <button @click="addName()">Toevoegen</button>
+
+        <h4 v-if="deelnemers.length == 1">Er is {{ deelnemers.length }} deelnemer</h4>
+
+        <h4 v-else>Er zijn {{deelnemers.length }} deelnemers</h4>
+
+        <ul>
+            <li v-for="naam in deelnemers">{{ naam }}</li>
+        </ul>
+        
+    </div>
+    
+</body>
+</html>

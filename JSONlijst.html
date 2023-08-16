@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        // Met simpele strings
+        var lijst = ["Amsterdam", "Utrecht", "Groningen"];
+
+        lijst.push("Leeuwarden");
+
+        // Met objecten en properties:
+
+        var landen = [];
+
+        landen.push({ naam: "Nederland", hoofdstad: "Amsterdam"});
+
+        // Of eerst een variabele maken
+        var land = { naam: "Belgie", hoofdstad: "Brussel" };
+
+        // En dan toevoegen
+        landen.push(land);
+
+        // Of de properties toekennen per regel:
+        var land2 = {};
+        land2.naam = "Engeland";
+        land2.hoofdstad = "Londen";
+
+        landen.push(land2);
+
+        // Let er wel op dat de properties van de verschillende landen gelijk zijn.
+        // In dit geval de properties naam en hoofdstad.
+
+        for(var l of landen)
+        {
+            console.log("De hoofdstad van " + l.naam + " is " + l.hoofdstad);
+        }
+
+
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>

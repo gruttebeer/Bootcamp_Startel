@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        body
+        {
+            text-align: center;
+        }
+
+        #output
+        {
+            margin: 20px 5%;
+            height: 300px;
+            border: solid 2px black;
+            overflow: auto;
+            text-align: left;
+            padding: 10px;
+        }
+
+    </style>
+
+    <script>
+
+        var socket = new WebSocket("server.n");
+
+        socket.onopen = function()
+        {
+            document.getElementById("output").innerHTML += "<p><i>De verbinding is geopend!</i></p>";
+
+            socket.send(JSON.stringify({ cmd: "login", name: "Robin"}));
+        }
+
+        socket.onmessage = function(msg)
+        {
+            var bericht = JSON.parse(msg.data);
+
+            console.log(bericht);
+
+            var output = document.getElementById("output");
+
+            if (bericht.cmd == "shout")
+            {
+                output.innerHTML += "<p>" + bericht.from + ": " + bericht.message + "</p>";
+            }
+
+            if (bericht.cmd == "login")
+            {
+                output.innerHTML += "<p><i>Login: </i>" + bericht.name + "</p>";
+            }
+
+            if (bericht.cmd == "logout")
+            {
+                output.innerHTML += "<p><i>Logout: </i>" + bericht.name + "</p>";
+            }
+
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function sendMessage()
+        {
+            var message = document.getElementById("chatbox").value;
+
+            socket.send(JSON.stringify({ cmd: "shout", message }));
+
+            document.getElementById("chatbox").value = "";
+        }
+
+        function checkEnter()
+        {
+            if (event.key == "Enter")
+                sendMessage();
+        }
+
+    </script>
+</head>
+<body>
+    
+    <h1>Chat Room</h1>
+
+    <input onkeyup="checkEnter();" type="text" id="chatbox" />
+    <button onclick="sendMessage();">Chat</button>
+
+    <div id="output"></div>
+
+</body>
+</html>

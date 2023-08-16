@@ -1,0 +1,93 @@
+<html>
+
+<head>
+
+    <title>Home page</title>
+
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            background-color: green;
+            color: white;
+            padding: 20px;
+            border: black 10px solid;
+            border-radius: 20px;
+            text-align: center;
+            transition: 3s;
+        }
+
+        /* dit is commentaar */
+
+        h1:hover {
+            background-color: blue;
+            transition: 5s;
+            /* transform: scale(1.1) rotate(3600deg); */
+        }
+
+        img {
+            height: 100px;
+            margin-right: 50px;
+        }
+
+        .tamdier,
+        .wilddier {
+            border-radius: 20px;
+        }
+
+        .tamdier {
+            border: 5px green solid;
+            box-shadow: 5px 10px 20px green;
+        }
+
+        .wilddier {
+            border: 5px black solid;
+            box-shadow: 5px 10px 20px;
+        }
+
+        #trainer {
+            font-family: impact;
+        }
+
+        #deelnemers {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>HTML CSS en Javascript</h1>
+
+    <h3 id="trainer">Trainer</h3>
+
+    Xander
+
+    <!-- Dit is commentaar -->
+
+    <h3 id="deelnemers">Deelnemers</h3>
+
+    <ol type="1" start="1">
+        <li>Robin</li>
+        <li>Robbin</li>
+        <li>Finette</li>
+        <li>Ed</li>
+    </ol>
+
+    Kijk hier voor meer info:
+    <a target="_blank" href="https://startel.nl/trainingen/bootcamp-html-css-en-javascript/">HTML</a>
+
+    <h4>Plaatjes</h4>
+
+    <img class="tamdier" src="https://xanderwemmers.nl/sheep.jpg" title="Dit is een schaap" />
+    <img class="wilddier" src="https://xanderwemmers.nl/wolf.jpg" />
+    <img class="wilddier" src="https://xanderwemmers.nl/tiger.jpg" />
+    <img class="wilddier" style="height: 100px" src="https://xanderwemmers.nl/elephant.jpg" />
+
+    <img class="wilddier" src="lion.jpg" />
+
+</body>
+
+</html>

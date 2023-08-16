@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentielijst</title>
+
+    <style>
+        body {
+            font-family: arial;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 60%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: solid 1px black;
+            text-align: left;
+            padding: 10px;
+        }
+
+        tr:nth-child(odd) {
+            background-color: lightgrey;
+        }
+
+        tr:hover {
+            background-color: #cc66ff;
+            color: white;
+        }
+        
+        tr:first-child {
+            background-color: #4db8ff;
+            color: black;
+        }
+
+        /* tr:nth-child(7) td:first-child, */
+        #trainer
+        {
+            font-style: italic;
+        }
+
+        table .it-talent
+        {
+            font-weight: bold;
+        }
+
+        th:first-child
+        {
+            text-align: center;
+            width: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>Presentielijst</h1>
+
+    <table>
+        <tr>
+            <th>&#9745;</th>
+            <th>Voornaam</th>
+            <th>Achternaam</th>
+            <th>Woonplaats</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" checked />
+            </td>
+            <td>Robbin</td>
+            <td>Wassing</td>
+            <td>Uithuizen</td>
+        </tr>
+        <tr class="it-talent">
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>David</td>
+            <td>Westerink</td>
+            <td>Groningen</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>Robin</td>
+            <td>Overal</td>
+            <td>Leeuwarden</td>
+        </tr>
+        <tr class="it-talent">
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>Finette</td>
+            <td>Verweij</td>
+            <td>Finsterwolde</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" checked />
+            </td>
+            <td>Ed</td>
+            <td>Spitteler</td>
+            <td>Wilnis</td>
+        </tr>
+        <tr id="trainer">
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>Xander</td>
+            <td>Wemmers</td>
+            <td>Utrecht</td>
+        </tr>
+    </table>
+
+
+</body>
+
+</html>

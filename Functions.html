@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        var naam = "RobinRobin";
+
+        console.log(naam.length);
+
+        console.log(naam.toLowerCase());
+
+        var index = naam.indexOf(" ");
+
+        var voornaam = naam.substring(0,index);
+        var achternaam = naam.substring(index + 1);
+
+        console.log(voornaam);
+        console.log(achternaam);
+
+        var naam2 = voornaam.substring(0,1).toUpperCase() + voornaam.substring(1).toLowerCase() 
+            + " " + achternaam.substring(0,1).toUpperCase() + achternaam.substring(1).toLowerCase();
+
+        console.log(naam2);
+
+        console.log(naam2.includes("Pit")); // false
+        console.log(naam2.includes("pit")); // true
+
+        // Getallen
+
+        console.log(Math.sqrt(50));
+
+        var getal1 = 0.1;
+        var getal2 = 0.2;
+
+        var som = getal1 + getal2;
+
+        console.log(som);
+
+        // Casino:
+        for(var i=0; i < 20; i++) {
+            console.log(Math.round(Math.random() * 36));
+        }
+
+        // Datums
+
+        var datum = new Date();
+        console.log(datum);
+
+        console.log(datum.getDay());
+        console.log(datum.getDate());
+
+        console.log(datum.getMonth());
+
+        var maanden = ["jan","feb","mrt","april","mei"];
+
+        console.log(maanden[datum.getMonth()]);
+
+        var dag = datum.getDate();
+
+        datum.setDate(dag + 100);
+
+        datum.setHours(13 + 72);
+
+        datum.setDate(-1000);
+
+        console.log(datum);
+
+        var gebdat = new Date();
+        gebdat.setDate(7);
+        gebdat.setMonth(1);
+        gebdat.setFullYear(1974);
+        gebdat.setHours(8);
+        gebdat.setMinutes(18);
+
+        console.log(gebdat);
+
+
+        function optellen(a, b, c=0, d=0)
+        {
+            return a+b+c+d;
+        }
+
+        function kwadraat(a)
+        {
+            return a * a;
+        }
+
+        console.log(optellen(2,3));
+
+        console.log(kwadraat(7));
+
+        console.log(optellen(5, 7, 2));
+
+        console.log(optellen(5, 7, 2, 10));
+
+        console.log(optellen("David", "Ed")); // Dit blijkt het gewoon te doen!
+
+        console.log(123 == "123"); // true
+        console.log(123 === "123"); // false want de types zijn verschillend
+
+        var leeftijd = "49";
+
+        console.log(leeftijd === 49); // false
+
+        // Converteer de string naar een number
+        leeftijd = parseInt(leeftijd);
+
+        console.log(leeftijd === 49); // true
+
+
+</script>
+</head>
+<body>
+    
+</body>
+</html>

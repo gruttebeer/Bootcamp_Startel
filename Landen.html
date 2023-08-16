@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+    <script>
+
+        $.getJSON("https://restcountries.com/v3.1/all", showCountries);
+
+        function showCountries(data)
+        {
+            data.push({
+                "name": {
+                    "common": "Drachten",
+                    "official": "Kingdom of Drachten",
+                    "nativeName": {
+                        "dan": {
+                            "official": "Færøerne",
+                            "common": "Færøerne"
+                        },
+                        "fao": {
+                            "official": "Føroyar",
+                            "common": "Føroyar"
+                        }
+                    }
+                },
+                "flags": {
+                    svg: ""
+                }
+
+            });
+
+
+            //data.sort((c1,c2) => c1.name.common.localeCompare(c2.name.common));
+
+            data.sort((c1, c2) => c2.population - c1.population);
+
+            var table = document.createElement("table");
+
+            for (var i = 0; i < data.length; i++)
+            {
+                var row = document.createElement("tr");
+
+                var td = document.createElement("td");
+                td.innerHTML = data[i].name.official;
+                row.append(td);
+
+                td = document.createElement("td");
+                td.innerHTML = data[i].region;
+                row.append(td);
+
+                td = document.createElement("td");
+                td.innerHTML = data[i].subregion;
+                row.append(td);
+
+                td = document.createElement("td");
+                td.innerHTML = data[i].population;
+                row.append(td);
+
+                // Er zijn meerdere muntsoorten, dus dit zal een for-lus moeten worden
+                td = document.createElement("td");
+
+                for (var coin in data[i].currencies)
+                {
+                    td.innerHTML += data[i].currencies[coin].name + "<br />";
+                }
+
+                row.append(td);
+
+                // De vlag:
+                td = document.createElement("td");
+                var img = document.createElement("img");
+                img.src = data[i].flags.svg;
+                img.width = 100;
+                td.append(img);
+                row.append(td);
+
+                table.append(row);
+            }
+
+            document.getElementById("output").append(table);
+
+            // var result = data.filter(c => c.name.common.includes("United"));
+
+            var result = data.filter(c => c.population > 100000000);
+
+            localStorage.landen = JSON.stringify(result);
+            console.log(result.length);
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h1>Alle landen</h1>
+
+    <div id="output"></div>
+</body>
+
+</html>

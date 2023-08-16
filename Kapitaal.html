@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body
+        {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        #output
+        {
+            border: 10px solid blue;
+            border-radius: 30px;
+            background-color: lightblue;
+            padding: 20px;
+            margin: 20px auto;
+            width: 400px;
+        }
+
+        #output.warning
+        {
+            background-color: pink;
+            border-color: red;
+        }
+    </style>
+
+    <script>
+        function calculate()
+        {
+            var kapitaal = document.getElementById("startkapitaal").value;
+
+            if (isNaN(kapitaal))
+            {
+                document.getElementById("output").innerHTML = "Dit is geen getal!";
+                document.getElementById("output").className = "warning";
+                return;
+            }
+
+            document.getElementById("output").className = "";
+
+            // Maak het output divje leeg 
+            document.getElementById("output").innerHTML = "";
+
+            var vandaag = new Date();
+            console.log(vandaag);
+
+            var jaar = vandaag.getFullYear(); // 2023
+
+            for (var teller = jaar; teller < jaar + 10; teller++)
+            {
+                kapitaal *= 1.05;
+                console.log(kapitaal);
+                document.getElementById("output").innerHTML += "<p>In het jaar " + teller + " heb je " + kapitaal.toFixed(2) + " euro</p>";
+            }
+
+        }
+
+        function valideer()
+        {
+            var kapitaal = document.getElementById("startkapitaal").value;
+
+            if (isNaN(kapitaal))
+            {
+                document.getElementById("output").className = "warning";
+                document.getElementById("knop").disabled = true;
+            }
+            else
+            {
+                document.getElementById("output").className = "";
+                document.getElementById("knop").disabled = false;
+
+                if (event.key == "Enter")
+                    calculate();
+            }
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Kapitaal en rente</h1>
+
+    <input onkeyup="valideer();" type="text" min="1000" max="10000" step="500" id="startkapitaal" placeholder="Startkapitaal" />
+
+    <button id="knop" onclick="calculate();">Bereken</button>
+
+    <div id="output"></div>
+</body>
+
+</html>

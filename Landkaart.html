@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+
+    <style>
+        #mijnKaart
+        {
+            width: 800px;
+            height: 500px;
+        }
+    </style>
+
+    <script>
+
+        // Meer info over leaflet:
+        // https://leafletjs.com
+
+        
+
+        // Dit is een globale variabele met als scope alle functies
+        var map;
+        var cirkelHome;
+
+        function initMap()
+        {
+            // Scope: de zichtbaarheid van een variabele
+            map = L.map("mijnKaart").setView([53.109561, 6.119976], 14);
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'XW 2023'
+            }).addTo(map);
+
+            L.marker([52,5]).addTo(map).bindPopup("Hello Utrecht!");
+            L.circle([53.219,6.566], { radius: 5000, fillColor: "yellow", color: "red" }).addTo(map);
+        }
+
+        function flyToRome()
+        {
+            map.flyTo([41.891483, 12.436203], 17);
+        }
+
+        function flyHome()
+        {
+            // Als eerder een circle is neergezet, haal die dan eerst weg
+            if (cirkelHome)
+                map.removeLayer(cirkelHome);
+
+            // showPosition is een callback function
+            navigator.geolocation.getCurrentPosition(showPosition);
+
+            // De functie watchPosition doet precies hetzelfde maar dan
+            // meermalen: elke 2 minuten wordt opnieuw je locatie bepaald
+            // navigator.geolocation.watchPosition(showPosition);
+        }
+
+
+        function showPosition(position)
+        {
+            console.log(position);
+
+            // Een aparte variabele omdat deze toch 3x voorkomt in de rest van de functie
+            var home = [position.coords.latitude, position.coords.longitude];
+
+            cirkelHome = L.circle(home, 
+                { 
+                    radius: position.coords.accuracy, 
+                    color: "orange", 
+                    fillColor: "darkOrange" 
+                }).addTo(map);
+
+            L.marker(home).addTo(map);
+
+            map.flyTo(home, 12);
+        }
+
+        function flyToCity()
+        {
+            var elements = document.getElementsByName("city");
+
+            for (var elt of elements)
+            {
+                if (elt.checked)
+                {
+                    switch(elt.value)
+                    {
+                        case "Parijs":
+                            map.flyTo([48.86,2.35], 10);
+                            break;
+
+                        case "Londen":
+                            map.flyTo([51.5,0], 10);
+                            break;
+
+                        case "Mallorca":
+                            map.flyTo([39.6952629, 3.0175712], 9);
+                            break;
+                    }
+                }
+            }
+        }
+
+    </script>
+
+</head>
+<body onload="initMap();">
+
+    <h1>Landkaart</h1>
+
+    <button onclick="flyToRome();">Rome!</button>
+
+    <button onclick="flyHome();">Thuis</button>
+
+    <br />
+    <br />
+
+    <div id="mijnKaart"></div>
+
+    <br />
+    <br />
+
+    <input type="radio" name="city" value="Londen" />Londen
+    <input type="radio" name="city" value="Parijs" />Parijs
+    <input type="radio" name="city" value="Mallorca" />Mallorca
+
+    <br />
+    <br />
+
+    <button onclick="flyToCity();">Vlieg naar stad</button>
+    
+</body>
+</html>

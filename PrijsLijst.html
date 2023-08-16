@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prijslijst</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: lightskyblue;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #links,
+        #rechts {
+            background-color: white;
+            float: left;
+            width: 40%;
+            margin: 0 5%;
+            padding: 30px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        #links .beschrijving {
+            width: 80%;
+            float: left;
+            margin: 5px 0;
+        }
+
+        #links .prijs {
+            float: left;
+            width: 20%;
+            margin: 5px 0;
+        }
+
+        #rechts .naam {
+            float: left;
+            width: 70%;
+        }
+
+        #rechts .beschrijving {
+            float: left;
+            width: 70%;
+            font-size: 80%;
+            font-style: italic;
+            margin: 10px 0 20px 0;
+        }
+            
+        #rechts .duur
+        {
+            float: left;
+            width: 30%;
+            text-align: right;
+        }
+        
+        #rechts .prijs {
+            float: left;
+            margin-top: 10px;
+            width: 30%;
+            text-align: right;
+        }
+
+    </style>
+
+    <script>
+        $.getJSON("prijslijst2.json", showData);
+
+        function showData(data)
+        {
+            showLosseBehandelingen(data.Los);
+            showCompleteBehandelingen(data.Compleet);
+        }
+
+        function showLosseBehandelingen(products)
+        {
+            var output = document.getElementById("losseBehandelingenDiv");
+
+            for (let i = 0; i < products.length; i++)
+            {
+                var div = document.createElement("div");
+                div.className = "beschrijving";
+                div.innerHTML = products[i].beschrijving;
+                output.append(div);
+
+                div = document.createElement("div");
+                div.className = "prijs";
+                div.innerHTML = "&euro; " + products[i].prijs.toFixed(2);
+                output.append(div);
+            }
+        }
+
+        function showCompleteBehandelingen(products)
+        {
+            var output = document.getElementById("completeBehandelingenDiv");
+
+            for (let i = 0; i < products.length; i++)
+            {
+                var div = document.createElement("div");
+                div.className = "naam";
+                div.innerHTML = products[i].naam;
+                output.append(div);
+
+                div = document.createElement("div");
+                div.className = "duur";
+                div.innerHTML = products[i].duur + " minuten";
+                output.append(div);
+                
+                div = document.createElement("div");
+                div.className = "beschrijving";
+                div.innerHTML = products[i].beschrijving;
+                output.append(div);
+                
+                
+                div = document.createElement("div");
+                div.className = "prijs";
+                div.innerHTML = "&euro; " + products[i].prijs.toFixed(2);
+                output.append(div);
+            }    
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Prijslijst</h1>
+
+    <div id="links">
+        <h3>Losse behandelingen</h3>
+
+        <div id="losseBehandelingenDiv"></div>
+
+    </div>
+
+    <div id="rechts">
+        <h3>Complete behandelingen</h3>
+
+        <div id="completeBehandelingenDiv"></div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FotoAlbum</title>
+
+    <script>
+        function showWolf()
+        {
+            document.get
+            document.getElementById("plaatje").src = "https://www.xanderwemmers.nl/wolf.jpg"
+            document.getElementById("plaatje").title = "Dit is een wolf"
+        }
+
+        function showSheep()
+        {
+            document.get
+            document.getElementById("plaatje").src = "https://www.xanderwemmers.nl/sheep.jpg"
+            document.getElementById("plaatje").title = "Dit is een schaap"
+        }
+         
+        function showElephant()
+        {
+            document.get
+            document.getElementById("plaatje").src = "https://www.xanderwemmers.nl/elephant.jpg"
+            document.getElementById("plaatje").title = "Dit is een olifant"
+        }
+
+        function showTiger()
+        {
+            document.get
+            document.getElementById("plaatje").src = "https://www.xanderwemmers.nl/tiger.jpg"
+            document.getElementById("plaatje").title = "Dit is een tijger"
+        }
+         
+        function changeHeight()
+        {
+            document.getElementById("plaatje").height = document.getElementById("invoer").value;
+        }
+        
+        function checkEnter()
+        {
+            if (event.key == "Enter")
+                changeHeight();
+        }
+
+    </script>
+</head>
+<body>
+    
+    <h1>Dierentuin</h1>
+
+    <input onkeyup="checkEnter();" type="text" id="invoer" value="200" />
+
+    <button onclick="changeHeight();">Hoogte</button>
+
+    <br />
+    <br />
+
+    <img onmouseover="showElephant();" onmouseleave="showTiger();" id="plaatje" height="200" title="Dit is een schaap" src="https://www.xanderwemmers.nl/sheep.jpg" />
+    
+    <br />
+    <br />
+
+    <button onclick="showWolf();">Wolf</button>
+    <button onclick="showSheep();">Schaap</button>
+
+</body>
+</html>
